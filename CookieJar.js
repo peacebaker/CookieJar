@@ -18,14 +18,14 @@ export class CookieJar {
 
     // loop through the key=value pairs to find a match
     for (let i = 0; i < cookies.length; i++ ) {
-      let cookieString = cookies[i];
+      let thisCookie = cookies[i];
 
       // any cookies after the first will start with a blank space
-      cookieString = cookieString.replace(this.stripper, '');
+      thisCookie = thisCookie.replace(this.stripper, '');
 
       // return the value of matching cookie, if it exists
-      if (cookieString.startsWith(name)) {
-        let cookie = cookieString.split('=');
+      if (thisCookie.startsWith(name)) {
+        let cookie = thisCookie.split('=');
         return cookie[1];
       }
     }
@@ -53,5 +53,13 @@ export class CookieJar {
 
     // set the cookie
     document.cookie = `${name}=${value}; expires=${expireDate.toUTCString()}; path=/; SameSite=Strict`;
+  }
+
+  /**
+   * Deletes a cookie of the specified name.
+   * @param {*} name - The name of the cookie.
+   */
+  static delete(name) {
+    document.cookie = `${name}; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`
   }
 }
